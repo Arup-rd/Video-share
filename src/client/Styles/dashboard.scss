@@ -1,0 +1,37 @@
+.right-content-dashboard{
+  width: 75%;
+  float: right;
+  display: block
+}
+
+.right-content-dashboard form{
+  margin-top: 0px !important;
+}
+
+.content-sidebar .active{
+  font-weight: 900
+}
+
+.grid{
+  position: relative;
+}
+
+.grid .btn-danger{    
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  opacity: 0;
+  -webkit-transition: all 0.4s ease-in;
+  -ms-transition: all 0.4s ease-in;
+  -o-transition: all 0.4s ease-in;
+  transition: all 0.4s ease-in;
+  
+}
+
+.grid:hover .btn-danger{
+  opacity: 1;
+  -webkit-transition: all 0.4s ease-in;
+  -ms-transition: all 0.4s ease-in;
+  -o-transition: all 0.4s ease-in;
+  transition: all 0.4s ease-in;
+}

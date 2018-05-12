@@ -1,0 +1,6 @@
+node_modules
+*.log
+doc
+package-lock.json
+dist/client
+yarn.lock

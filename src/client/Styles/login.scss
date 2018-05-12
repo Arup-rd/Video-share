@@ -1,0 +1,87 @@
+.Login{
+    background:#8741c7;
+    color:#333;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    z-index: 9999;
+    top: 0px;
+    left: 0px;
+    padding: 30px;
+    overflow-y: scroll
+}
+
+#regLoginForm form {
+    border: 1px solid #f1f1f1;
+    padding: 10%;
+    margin-top: 30px;
+    box-shadow: 1px 1px 20px 1px #ddd;
+    background: #fff;
+}
+
+#regLoginForm{
+    margin: 0px auto;
+    animation-name: regLoginForm;
+    animation-delay: 1s
+}
+
+@keyframes regLoginForm {
+    from{transform: scale(0.5);opacity: 0}
+    to{transform: scale(1);opacity: 1}
+}
+
+#regLoginForm h2{
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #403866;
+    font-family: "Roboto", sans-serif;
+    letter-spacing: 2px;
+    margin-bottom: 25px;
+    border-radius: 1px;
+}
+
+
+#regLoginForm input[type=text], #regLoginForm input[type=password], #regLoginForm input[type=email], #regLoginForm textarea, #regLoginForm select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+#regLoginForm select{
+    height: auto;
+    padding: 14px 20px;
+}
+
+#regLoginForm input[type=text]:focus, #regLoginForm input[type=password]:focus, #regLoginForm input[type=email]:focus, #regLoginForm textarea:focus {
+    animation-name: inputAnim;
+    animation-duration: 0.2s;
+}
+
+@keyframes inputAnim {
+    from {transform: scale(1.2)}
+    to {transform: scale(1)}
+}
+
+#regLoginForm .btn{
+    padding: 12px 20px;
+    width: 100%;
+}
+
+.closeBtnLogin{
+    position: absolute;
+    right: -10px;
+    top: 5px;
+    cursor: pointer;
+    color: white;
+}
+
+.createAccountBtn{
+    margin-top: 20px;
+    font-style: italic;
+}
+
+#regLoginForm label[for="remember"]{
+    margin-left: 10px;
+}
