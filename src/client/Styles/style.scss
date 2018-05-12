@@ -1,10 +1,182 @@
+@import url('https://fonts.googleapis.com/css?family=Kaushan+Script|Titillium+Web:400,700');
+@import url('./login.scss');
+@import url('./contact.scss');
+
+// $primary: #722BC2;
+$primary: #2F80ED;
+$secondary: #B86BDC;
+$tertiary: #423E57;
+$text: #8A898B;
+$pf: 'Titillium Web', sans-serif;
+$sec: 'Kaushan Script', sans-serif;
+$blue: #2F80ED;
+
+
+body{
+  font-family: 'Titillium Web', sans-serif;
+  color: $text;
+}
+
+a{
+  color: $text;
+}
+
+section{
+  padding: 80px 0px;
+}
+
+.section-heading{
+  color: $primary;
+  font-weight: bold;
+}
+
+.has-border-bottom{
+  border-bottom: 1px solid #efefef
+}
+
+.bg-pri{
+  background-color: $primary !important;
+}
+
+.bg-blue{
+  background-color: $blue !important;
+}
+
+.bg-ter{
+  background-color: $secondary !important;
+}
+
+.text-pri{
+  color: $primary !important;
+}
+
+.text-sec{
+  color: $secondary !important;
+}
+
+.btn-pri{
+  background-color: $tertiary !important;
+  box-shadow: 3px 3px 3px 0px $text;
+  color: white;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+
+.bg-g-x{
+  background: linear-gradient(to left, $primary, $secondary) !important;
+
+}
+
+
+// Nav Section 
+header .navbar-expand-lg{
+  border-bottom: 1px solid #efefef;
+}
+
+header .navbar-brand h3{
+  font-family: $sec;
+  color: $primary;
+  margin: 0px;
+  padding-top: 10px;
+}
+header .navbar-brand p{
+  margin: 0px;
+  
+}
+
+header .nav-link{
+  color: $text;
+  font-size: 18px;
+}
+
+header .navbar-nav .active{
+  color: $primary;
+}
+
+
+// Slider Section
+#slider{
+  position: relative;
+}
+#caption h1{
+  font-size: 72px;
+}
+#caption p{
+  font-size: 18px;
+}
+
+#caption{
+  position: absolute;
+  bottom: 150px;
+  left: 0px;
+  right: 0px;
+  z-index: 99999;
+}
+
+#slider .owl-dots{
+  position: absolute;
+  bottom: 100px;
+  left: 0px;
+  right: 0px;
+  z-index: 9999;
+}
+
+#slider .owl-dots .owl-dot span{
+  padding: 8px;
+  background: #fff;
+}
+#slider .owl-dots .active span{
+  background: $primary;
+}
+// End of Slider Part
+
+
+// Feature Content
+.feature-nav{
+  box-shadow: 0px 0px 10px 0px #dedede
+}
+
+.feature-nav .nav-link:focus{
+  font-weight: bold;
+}
+
+
+// Card
+.card{
+  cursor: pointer;
+}
+
+.card .card-footer{
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  background: #33333366;
+  padding: 55px;
+  opacity: 0;
+  -webkit-transition: all 0.3s ease-out 0s;
+  -ms-transition: all 0.3s ease-out 0s;
+  -moz-transition: all 0.3s ease-out 0s;
+  -o-transition: all 0.3s ease-out 0s;
+  transition: all 0.3s ease-out 0s;
+}
+
+.card:hover .card-footer{
+  opacity: 1;
+  -webkit-transition: all 0.3s ease-in 0s;
+  -ms-transition: all 0.3s ease-in 0s;
+  -moz-transition: all 0.3s ease-in 0s;
+  -o-transition: all 0.3s ease-in 0s;
+  transition: all 0.3s ease-in 0s;
+}
+
+.card .card-footer i{
+  color:#fff;
+}
 .videos form button{
   margin-left: -2px;
 }
 
-header .navbar-nav .active{
-  color: #060
-}
 
 .dropdown .dropdown-menu{
   top: 20px;

@@ -2,16 +2,15 @@ import React from 'react';
 import { Link } from 'react-router-dom'
 // import Model from './Model';
 
-const Card = ({ data }) => (
-  <div className="card bg-light text-center mb-4">
-    <div className="card-body">
-      <h3>{data ? data.firstName + ' ' + data.lastName : 'No Title'}</h3>
-      <p className="text-secondary">{data ? data.email : 'No Email'}</p>
-    </div> 
-    <div className="card-footer">
-      <button type="button" className="btn btn-primary" data-toggle="modal" data-target={data ? `#${data._id}`: 'No date'}>
-      View Details 
-    </button>
+const Card = ({ data, ...props }) => (
+  <div className={props.className ? props.className : `col-md-4 col-sm-6`}>
+    <div className="card bg-light text-center mb-4">
+      <div className="card-body p-0">
+        <img src="/images/g7.jpg" className="img-fluid" alt="video"/>
+      </div> 
+      <div className="card-footer">
+        <span><i className="fa fa-play-circle fa-4x"></i></span>
+      </div>
     </div>
   </div>
 )

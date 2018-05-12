@@ -1,23 +1,17 @@
 import React from 'react';
 import Row from '../Row';
-import ImageCard from './Image.Card';
+import Card from '../Card';
 
 class ImageContents extends React.Component{
   render(){
     return (
       <Row>
-          <ImageCard/>
-          <ImageCard/>
-          <ImageCard/>
-          <ImageCard/>
-          <ImageCard/>
-          <ImageCard/>
-          <ImageCard/>
-          <ImageCard/>
-          <ImageCard/>
-          <ImageCard/>
-          <ImageCard/>
-          <ImageCard/>
+        <Card/>
+        <Card/>
+        <Card/>
+        <Card/>
+        <Card/>
+        <Card/>
       </Row>
     )
   }

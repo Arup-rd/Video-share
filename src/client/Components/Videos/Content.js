@@ -1,23 +1,21 @@
 import React from 'react';
 import Row from '../Row';
 import VideoCard from './Video.Card';
+import Card from '../Card';
 
 class Contents extends React.Component{
   render(){
     return (
       <Row>
-          <VideoCard/>
-          <VideoCard/>
-          <VideoCard/>
-          <VideoCard/>
-          <VideoCard/>
-          <VideoCard/>
-          <VideoCard/>
-          <VideoCard/>
-          <VideoCard/>
-          <VideoCard/>
-          <VideoCard/>
-          <VideoCard/>
+        <Card/>
+        <Card/>
+        <Card/>
+        <Card/>
+        <Card/>
+        <Card/>
+        <Card/>
+        <Card/>
+        <Card/>
       </Row>
     )
   }

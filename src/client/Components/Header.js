@@ -8,15 +8,21 @@ import AuthNav from './AuthNav';
 
 const Header = () => (
   <header>
-    <AuthNav/>
-      
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div className="bg-pri">
+      <AuthNav/>
+    </div>
+    <nav className="navbar navbar-expand-lg navbar-white bg-white">
       <Container>
-            <Link className="navbar-brand" to="/">Navbar</Link>
-            <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-              <span className="navbar-toggler-icon"></span>
-            </button>
-            <NavBar/>
+        <button className="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span className="navbar-toggler-icon"></span>
+        </button>
+        <Link className="navbar-brand" to="/">
+          <h3>Video Sharing</h3>
+          <p>Awesome Slogan Here</p>
+        </Link>
+        <NavBar/>
+        <button className="btn btn-pri my-2 my-sm-0">Want Personalised Content?</button>
+        
       </Container>
     </nav>
   </header>

@@ -10,7 +10,7 @@ const PrivateRoute = ({isAuthenticated, component: Component, ...rest}) => (
         <Route {...rest} component={(props)=> (
             <section id="user-profile">
                 <Container>
-                    <Row className="my-5">
+                    <Row >
                         <DashboardSidebar/>
                         <Component {...props}/>
                         <div className="clear"> </div>

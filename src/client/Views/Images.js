@@ -6,18 +6,19 @@ import Contents from '../Components/Videos/Content';
 import ImageNav from '../Components/Images/Image.Nav';
 import ImageContents from '../Components/Images/Content';
 import Counter from '../Components/Homepage/Counter';
+import FeatureNav from '../Components/Homepage/FeatureNav';
 
 class Videos extends React.Component{
 
   render(){
     return (
     <div className="content"> 
-      <section className="videos">
+      <section className="videos py-0">
         <Container>
           <Search/>
           <Row>
-            <div className="col-md-2">
-              <ImageNav/>
+            <div className="col-md-2 p-0">
+              <FeatureNav/>
             </div>
             <div className="col-md-10">
               <ImageContents/>

@@ -34,8 +34,8 @@ const AppRouter = () => (
         <Route path='/' exact={true} component={Homepage} />
         <Route path='/category' component={Category} />
         <Route path='/category/:id' component={CategorySingle} />
-        {/* <Route path='/about' component={About} />
-        <Route path='/contact' component={Contact} /> */}
+        <Route path='/about' component={About} />
+        <Route path='/contact' component={Contact} />
         <Route path='/single/:id' component={Single}/>
         <Route path="/videos" component={Videos}/>
         <Route path="/images" component={Images}/>
