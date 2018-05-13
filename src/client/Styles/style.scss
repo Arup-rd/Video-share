@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Kaushan+Script|Titillium+Web:400,700');
 @import url('./login.scss');
 @import url('./contact.scss');
+@import "~video-react/styles/scss/video-react"; // or import scss
 
 // $primary: #722BC2;
 $primary: #2F80ED;
@@ -18,7 +19,7 @@ body{
 }
 
 a{
-  color: $text;
+  color: $primary;
 }
 
 section{
@@ -94,6 +95,9 @@ header .navbar-nav .active{
   color: $primary;
 }
 
+header .dropdown-menu-right{
+}
+
 
 // Slider Section
 #slider{
@@ -146,6 +150,12 @@ header .navbar-nav .active{
 .card{
   cursor: pointer;
 }
+#feature .video-react .video-react-big-play-button,
+#videos .video-react .video-react-big-play-button,
+#user-profile  .video-react .video-react-big-play-button,
+#images .video-react .video-react-big-play-button{
+  display: none !important;
+}
 
 .card .card-footer{
   height: 100%;
@@ -154,6 +164,7 @@ header .navbar-nav .active{
   background: #33333366;
   padding: 55px;
   opacity: 0;
+  top: 0px;
   -webkit-transition: all 0.3s ease-out 0s;
   -ms-transition: all 0.3s ease-out 0s;
   -moz-transition: all 0.3s ease-out 0s;
@@ -173,6 +184,52 @@ header .navbar-nav .active{
 .card .card-footer i{
   color:#fff;
 }
+
+// Single
+#single{
+  overflow:hidden;
+}
+.view{
+  line-height: 35px;
+}
+
+.view ul{
+  list-style: none;
+  padding-left: 0px;
+}
+
+.view ul li{
+  float:left;
+  padding-right: 20px;
+}
+
+.view ul li i{
+  padding-right: 5px;
+}
+
+.SocialMediaShareCount{display: inline;}
+
+.tags{
+  line-height: 35px;
+}
+
+.tags ul{
+  list-style: none;
+  padding-left: 0px;
+}
+
+.tags ul li{
+  float:left;
+  padding:0px 20px;
+  background: #fff;
+  box-shadow:1px 1px 2px 0px #ddd;
+  margin: 5px;
+}
+#noback{
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
 .videos form button{
   margin-left: -2px;
 }
@@ -185,4 +242,26 @@ header .navbar-nav .active{
 #user-profile .nav .active{
   color:#333;
   font-weight: bold
+}
+
+
+.thumbnail #deleteBtn{
+  position: absolute;
+  top: 5px;
+  right: 20px;
+  box-sizing: border-box;
+  opacity: 0;  
+  -webkit-transition: all 0.3s ease-out 0s;
+  -ms-transition: all 0.3s ease-out 0s;
+  -moz-transition: all 0.3s ease-out 0s;
+  -o-transition: all 0.3s ease-out 0s;
+  transition: all 0.3s ease-out 0s;
+}
+.thumbnail:hover #deleteBtn{
+  opacity: 1;
+  -webkit-transition: all 0.3s ease-in 0s;
+  -ms-transition: all 0.3s ease-in 0s;
+  -moz-transition: all 0.3s ease-in 0s;
+  -o-transition: all 0.3s ease-in 0s;
+  transition: all 0.3s ease-in 0s;
 }

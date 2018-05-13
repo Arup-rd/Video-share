@@ -3,27 +3,18 @@ export default (state = {}, action) => {
         case 'SET_CONTENT':
             return state = {
                 all: action.data,
-                cat_content: state.cat_content,
-                category: state.category,
-                single: state.single,
-                mycontent: state.mycontent 
+                ...state
             }
         case 'SET_CATEGORY':
             return state = {
-                all: state.all,
-                cat_content: state.cat_content,
-                single: state.single,
-                mycontent: state.mycontent,
-                category: action.data                
+                category: action.data,
+                ...state             
             }
         
         case 'SET_CATEGORY_CONTENT':
             return state = {
                 cat_content: action.data,
-                all: state.all,
-                category: state.category,
-                single: state.single,
-                mycontent: state.mycontent                
+                ...state               
             }
         // case 'SET_PAGE_CONTENT':
         //     let page_content = [];
@@ -35,19 +26,13 @@ export default (state = {}, action) => {
         case 'MY_CONTENT':
             // state.mycontent = action.data;
             return state = {
-                all: state.all,
-                category: state.category,
-                cat_content: state.cat_content,
                 mycontent: action.data,
-                single: state.single                
+                ...state              
             }
         case 'SINGLE_CONTENT':
             return state = {
-                all: state.all,
-                category: state.category,
-                cat_content: state.cat_content,
-                mycontent: state.mycontent,
-                single: action.data                
+                single: action.data,
+                ...state            
             }
         case 'DELETE_CONTENT' : {
             const pos = state.mycontent.map((content) => {
@@ -56,14 +41,20 @@ export default (state = {}, action) => {
             const mycontent = state.mycontent.filter((content, index) => index !== pos);
             
             return state = {
-                all: state.all,
-                category: state.category,
-                cat_content: state.cat_content,
                 mycontent,
-                single: state.single                
+                ...state
             }
-
         }
+        case 'MY_VIDEO': 
+            return state = {
+                videos: action.data,
+                ...state
+            }
+        case 'MY_IMAGE': 
+            return state = {
+                images: action.data,
+                ...state
+            }
         case 'GET_SINGLE': 
             return state.single = Object.values(state.all).map((value) => value._id === action.id);
         default:

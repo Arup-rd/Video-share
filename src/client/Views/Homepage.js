@@ -1,8 +1,7 @@
 import React from 'react';
 import Axios from 'axios';
-import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-
+import { connect } from 'react-redux';
 import Grid from '../Components/Grids/Grid';
 import Sidebar from '../Components/Sidebar';
 import { setContent } from '../Actions/content';
@@ -12,6 +11,7 @@ import BrowseRepo from '../Components/Homepage/BrowseRepo';
 import FeatureContent from '../Components/Homepage/FeatureContent';
 import Counter from '../Components/Homepage/Counter';
 import QuickStart from '../Components/Homepage/QuickStart';
+import Loader from '../Components/Loader'
 
 class Homepage extends React.Component{
   state = {
@@ -35,13 +35,18 @@ class Homepage extends React.Component{
     <div className="content">
         <Slider/>
         <BrowseRepo/>
-        <FeatureContent/>
+        {this.props.allContent ? 
+        <FeatureContent contents={this.props.allContent} hash={this.props.location.hash.substring(1)}/>
+        :
+        <Loader/>
+        }
         <Counter/>
         <QuickStart/>
     </div>
     )
   }
 }
+
 const mapStateToProps = (state) => ({
   allContent: state.content.all
 })
@@ -50,5 +55,5 @@ const mapDispatchToProps = (dispatch) => ({
   setContent: (body) => dispatch(setContent(body))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Homepage)
+export default connect(mapStateToProps, mapDispatchToProps)(Homepage);
 

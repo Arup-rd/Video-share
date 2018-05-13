@@ -10,8 +10,11 @@ let isMatched;
 const filterContent = async (ctx) => {
   try {
     content = await contentCrud.get({
-      qr: { category: ctx.params.filter },
-      populate: 'author category'
+      qr: {
+        category: ctx.params.filter
+      },
+      populate: 'category file',
+      sort: '-createdAt'
     });
   } catch (e) {
     ctx.throw(404, e.message);
@@ -20,11 +23,37 @@ const filterContent = async (ctx) => {
   }
 };
 
+const ContentDownLoad = async (ctx) => {
+  try {
+    content = await contentCrud.single({
+      qr: { category: ctx.params.contentId }
+    });
+    if (content.price === 0) {
+      user = await userCrud.single({
+        qr: {
+          id: ctx.state.user.uid
+        }
+      });
+      user.downloads.push(content);
+      await user.save();
+    } else {
+      ctx.body = {
+        message: 'To Purchase this you have to subscribe :) '
+      };
+    }
+  } catch (error) {
+    ctx.throw = {
+      message: 'Sorry you don\'t have right to edit this'
+    };
+  }
+};
+
 const contentCategory = async (ctx) => {
   try {
     content = await contentCrud.get({
       select: 'category -_id',
-      populate: 'category'
+      sort: '-createdAt',
+      populate: 'category file'
     });
   } catch (e) {
     ctx.throw(404, e.message);
@@ -36,7 +65,8 @@ const contentCategory = async (ctx) => {
 const contentAll = async (ctx) => {
   try {
     content = await contentCrud.get({
-      populate: 'author'
+      populate: 'file category',
+      sort: '-createdAt'
     });
   } catch (e) {
     ctx.throw(404, e.message);
@@ -44,6 +74,72 @@ const contentAll = async (ctx) => {
     ctx.body = content;
   }
 };
+
+
+const contentAllImages = async (ctx) => {
+  try {
+    content = await contentCrud.get({
+      qr: {
+        contentType: 'Image'
+      },
+      populate: 'file category',
+      sort: '-createdAt'
+    });
+  } catch (e) {
+    ctx.throw(404, e.message);
+  } finally {
+    ctx.body = content;
+  }
+};
+
+const contentAllVideos = async (ctx) => {
+  try {
+    content = await contentCrud.get({
+      qr: { contentType: 'Video' },
+      populate: 'file category',
+      sort: '-createdAt'
+    });
+  } catch (e) {
+    ctx.throw(404, e.message);
+  } finally {
+    ctx.body = content;
+  }
+};
+
+
+const VideosWithCat = async (ctx) => {
+  try {
+    content = await contentCrud.get({
+      qr: {
+        contentType: 'Video',
+        category: ctx.params.category
+      },
+      populate: 'file category',
+      sort: '-createdAt'
+    });
+  } catch (e) {
+    ctx.throw(404, e.message);
+  } finally {
+    ctx.body = content;
+  }
+};
+const ImageWithCat = async (ctx) => {
+  try {
+    content = await contentCrud.get({
+      qr: {
+        contentType: 'Image',
+        category: ctx.params.category
+      },
+      populate: 'file category',
+      sort: '-createdAt'
+    });
+  } catch (e) {
+    ctx.throw(404, e.message);
+  } finally {
+    ctx.body = content;
+  }
+};
+
 
 const myContent = async (ctx) => {
   try {
@@ -77,7 +173,7 @@ const contentSingle = async (ctx) => {
   try {
     content = await contentCrud.single({
       qr: { _id: ctx.params.id },
-      populate: 'author'
+      populate: 'file category'
     });
   } catch (e) {
     ctx.throw(404, e.message);
@@ -87,7 +183,6 @@ const contentSingle = async (ctx) => {
 };
 
 const contentCreate = async (ctx) => {
-  console.log(ctx.request.body);
   const contentData = Object.assign({
     author: ctx.state.user.uid
   }, ctx.request.body);
@@ -96,33 +191,40 @@ const contentCreate = async (ctx) => {
   } catch (e) {
     ctx.throw(422, e.message);
   } finally {
-    try {
-      user = await userCrud.single({
-        qr: { _id: ctx.state.user.uid }
-      });
-    } catch (e) {
-      ctx.throw(422, e.message);
-    } finally {
-      user.contents.push(contentNew._id);
-      user.save();
-      ctx.body = {
-        body: contentNew,
-        message: 'Post is successful'
-      };
-    }
+    ctx.body = contentNew;
+  }
+};
+
+const UpdateViews = async (ctx) => {
+  try {
+    content = await contentCrud.put({
+      params: {
+        qr: { _id: ctx.params.id },
+        populate: 'file category'
+      },
+      body: {
+        views: ctx.request.body.views,
+        shares: ctx.request.body.shares
+      }
+    });
+  } catch (e) {
+    ctx.throw(422, e.message);
+  } finally {
+    ctx.body = content;
   }
 };
 
 const contentUpdate = async (ctx) => {
   try {
     user = await userCrud.single({
-      qr: { _id: ctx.state.user.uid }
+      qr: { _id: ctx.state.user.uid },
+      populate: 'file category'
     });
-    isMatched = user.contents.indexOf(ctx.params.id);
+    isMatched = user.acc_type.toLowerCase() === 'admin';
   } catch (e) {
     ctx.throw(422, e.message);
   } finally {
-    if (isMatched !== -1) {
+    if (isMatched) {
       try {
         content = await contentCrud.put({
           params: {
@@ -133,10 +235,7 @@ const contentUpdate = async (ctx) => {
       } catch (e) {
         ctx.throw(422, e.message);
       } finally {
-        ctx.body = {
-          body: content,
-          message: 'Post Updated..'
-        };
+        ctx.body = content;
       }
     } else {
       ctx.body = {
@@ -151,11 +250,11 @@ const contentDelete = async (ctx) => {
     user = await userCrud.single({
       qr: { _id: ctx.state.user.uid }
     });
-    isMatched = user.contents.indexOf(ctx.params.id);
+    isMatched = user.acc_type.toLowerCase() === 'admin';
   } catch (e) {
     ctx.throw(422, e.message);
   } finally {
-    if (isMatched !== -1) {
+    if (isMatched) {
       try {
         content = await contentCrud.delete({
           params: {
@@ -187,5 +286,11 @@ export {
   myContent,
   userContent,
   filterContent,
-  contentCategory
+  contentCategory,
+  ContentDownLoad,
+  contentAllImages,
+  contentAllVideos,
+  VideosWithCat,
+  ImageWithCat,
+  UpdateViews
 };

@@ -23,6 +23,7 @@ import Images from '../Views/Images';
 import MyImages from '../Components/Dashboard/MyImages';
 import MyVideos from '../Components/Dashboard/MyVideos';
 import MyMemes from '../Components/Dashboard/MyMemes';
+import CustomOrder from '../Views/CustomOrder';
 
 export const history = createHistory()
 
@@ -36,18 +37,20 @@ const AppRouter = () => (
         <Route path='/category/:id' component={CategorySingle} />
         <Route path='/about' component={About} />
         <Route path='/contact' component={Contact} />
-        <Route path='/single/:id' component={Single}/>
-        <Route path="/videos" component={Videos}/>
-        <Route path="/images" component={Images}/>
+        <Route path="/videos" exact={true} component={Videos}/>
+        <Route path="/images" exact={true} component={Images}/>
+        <Route path='/images/:id' component={Single}/>
+        <Route path='/videos/:id' component={Single}/>
+        <Route path='/custom-order' component={CustomOrder}/>
         
         <PublicRoute path='/login' component={Login} />
         <PublicRoute path='/register' component={Register} />
 
         <PrivateRoute path="/myaccount" exact={true} component={MyAccount}/>
-        <PrivateRoute path="/mycontent/post" component={AddNewContent}/>
-        <PrivateRoute path="/myaccount/downloads/images" exact={true} component={MyImages}/>
-        <PrivateRoute path="/myaccount/downloads/videos" exact={true} component={MyVideos}/>
-        <PrivateRoute path="/myaccount/downloads/memes" exact={true} component={MyMemes}/>
+        <PrivateRoute path="/myaccount/post" component={AddNewContent}/>
+        <PrivateRoute path="/myaccount/images" exact={true} component={MyImages}/>
+        <PrivateRoute path="/myaccount/videos" exact={true} component={MyVideos}/>
+        <PrivateRoute path="/myaccount/memes" exact={true} component={MyMemes}/>
 
         <PrivateRoute path="/myaccount/orders/images" exact={true} component={MyImages}/>
         <PrivateRoute path="/myaccount/orders/videos" exact={true} component={MyVideos}/>

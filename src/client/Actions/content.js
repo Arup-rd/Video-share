@@ -18,6 +18,15 @@ export const myContent = (data) => ({
     data
 });
 
+export const MyImage = (data) => ({
+    type: 'MY_IMAGE', 
+    data
+})
+export const MyVideo = (data) => ({
+    type: 'MY_VIDEO', 
+    data
+})
+
 // export const setCatContent = (data) => ({
 //     type: 'SET_PAGE_CONTENT',
 //     data

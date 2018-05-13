@@ -5,7 +5,7 @@ module.exports = {
   },
   db: {
 		host: 'localhost',
-		dbName: 'parole',
+		dbName: 'videosharing',
 		debug: false,
 		options: {
 			userName: false,

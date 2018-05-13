@@ -8,24 +8,51 @@ const contentSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  category: {
+  category: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'CategoryModel',
-    required: true
-  },
+    ref: 'CategoryModel'
+  }],
   description: {
     type: String
   },
+  tags: [{
+    type: String
+  }],
   author: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'userModel'
   },
-  parmalink: {
-    type: String,
+  file: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'filesModel',
     required: true
   },
   thumbnail: {
     type: String
+  },
+  price: {
+    type: Number,
+    default: 0
+  },
+  views: {
+    type: Number,
+    default: 0
+  },
+  shares: {
+    type: Number,
+    default: 0
+  },
+  likes: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'userModel'
+  }],
+  comments: [{
+    type: String // Ignore it -> InCompleted
+  }],
+  contentType: {
+    type: String,
+    required: true,
+    enum: ['Video', 'video', 'Image', 'image']
   }
 });
 

@@ -32,7 +32,7 @@ class AuthNav extends React.Component{
   }
 }
 const mapStateToProps = (state) => ({
-  isAuthenticated: !!state.auth.token
+  isAuthenticated: !!localStorage.getItem('auth')
 })
 
 const mapDispatchToProps = (dispatch) => ({

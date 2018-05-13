@@ -8,6 +8,7 @@ export default class Crud {
       this.model.find(options ? options.qr : {})
         .select(options ? options.select ? options.select : {} : {}) //eslint-disable-line
         .populate(options ? options.populate ? options.populate : '' : '') //eslint-disable-line
+        .sort(options ? options.sort ? options.sort : '' : '') // eslint-disable-line
         .exec()
         .then((result) => {
           resolve(result);

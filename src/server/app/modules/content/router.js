@@ -5,10 +5,16 @@ import {
   contentCreate,
   contentUpdate,
   contentDelete,
+  ContentDownLoad,
   myContent,
   userContent,
   filterContent,
-  contentCategory
+  contentCategory,
+  contentAllImages,
+  contentAllVideos,
+  VideosWithCat,
+  ImageWithCat,
+  UpdateViews
 } from './controller';
 
 export const baseUrl = '/api/content';
@@ -19,6 +25,14 @@ export const routes = [
     route: '/category',
     handlers: [
       contentCategory
+    ]
+  },
+  {
+    method: 'GET',
+    route: '/download/:contentId',
+    handlers: [
+      isAuthenticated,
+      ContentDownLoad
     ]
   },
   {
@@ -45,6 +59,34 @@ export const routes = [
   },
   {
     method: 'GET',
+    route: '/video',
+    handlers: [
+      contentAllVideos
+    ]
+  },
+  {
+    method: 'GET',
+    route: '/video/:category',
+    handlers: [
+      VideosWithCat
+    ]
+  },
+  {
+    method: 'GET',
+    route: '/image',
+    handlers: [
+      contentAllImages
+    ]
+  },
+  {
+    method: 'GET',
+    route: '/image/:category',
+    handlers: [
+      ImageWithCat
+    ]
+  },
+  {
+    method: 'GET',
     route: '/',
     handlers: [
       contentAll
@@ -63,6 +105,13 @@ export const routes = [
     handlers: [
       isAuthenticated,
       contentUpdate
+    ]
+  },
+  {
+    method: 'PUT',
+    route: '/public/:id',
+    handlers: [
+      UpdateViews
     ]
   },
   {

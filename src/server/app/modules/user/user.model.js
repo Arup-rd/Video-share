@@ -35,6 +35,14 @@ const userSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'contentModel'
   }],
+  order: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'orderModel'
+  }],
+  downloads: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'contentModel'
+  }],
   social: {
     facebook: {
       id: String,

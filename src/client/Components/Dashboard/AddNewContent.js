@@ -10,7 +10,9 @@ class AddNewContent extends React.Component{
     title: '',
     category: '',
     description: '',
-    parmalink: '',
+    file: '',
+    contentType: '',
+    tags: [],
     thumbnail: '',
     uploadStatus: null,
     progress: false
@@ -25,20 +27,27 @@ class AddNewContent extends React.Component{
     })
   }
 
-  handleFileUpload = (e) => {
+  handleFileUpload = async (e) => {
+    let data = new FormData();
+    data.append('docs', e.target.files[0]);
+
     this.setState({
         uploadStatus: 'Please Wait...',            
     })
-    const file = e.target.files[0];        
-    const storageRef = storage.ref('projects/'+ file.name);
-    const task = storageRef.put(file).then((res) => {
-      this.setState({
-        uploadStatus: 'Uploaded Successfully!',
-        //Getting the uploaded file URL
-        parmalink: res.metadata.downloadURLs[0]
-      })
-    }).catch((e)=>{
-      console.log("Error", e)
+
+    Axios.post(`${conf.server}/api/files`, data, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+            'authorization': localStorage.getItem('auth')
+        }
+    }).then((res) => {
+        console.log(res.data);
+        this.setState({
+            uploadStatus: 'Successfull',
+            file: res.data.files._id       
+        })
+    }).catch((e) => {
+        console.log("errr", e)
     })
   }
 
@@ -51,20 +60,20 @@ class AddNewContent extends React.Component{
         title: this.state.title,
         category: this.state.category,
         description: this.state.description,
-        parmalink: this.state.parmalink
+        file: this.state.file,
+        tags: this.state.tags,
+        contentType: this.state.contentType
     };
     Axios({
         method: 'post',
         url: `${conf.server}/api/content`,
         data: body,
         headers: {
-            'Content-Type': 'application/json',
             'authorization': localStorage.getItem('auth')
         }
     }).then((res) => {
         console.log(res.data)
-        this.props.history.push('/dashboard/mycontent');
-
+        this.props.history.push('/myaccount');
         this.setState({
             progress: 2
         })
@@ -79,17 +88,17 @@ class AddNewContent extends React.Component{
   render() {
     return (
     <div className="col-md-9" id="regLoginForm">
-      <form role="form" onSubmit={this.handleSubmit} >
+      <form className="m-0" role="form" onSubmit={this.handleSubmit} encType='multipart/form-data'>
+        <h1 className="text-center">Add New Content</h1>
           <div className="row">
               <div className="col-md-6">
                   <div className="form-group has-success has-feedback">
                       <label className="control-label" htmlFor="inputSuccess3">Title</label>
-                      <input type="text" className="form-control" id="inputSuccess3" required="required" onChange={(e)=> {
+                      <input type="text" className="form-control" id="inputSuccess3" placeholder="Video/Image Title" required="required" onChange={(e)=> {
                           this.setState({
                               title: e.target.value
                           });
                       }}/>
-                      {/* <i className="fa fa-check form-control-feedback"></i> */}
                   </div>
               </div>
               <div className="col-md-6">
@@ -100,7 +109,7 @@ class AddNewContent extends React.Component{
                               category: e.target.value
                           })
                       }}>
-                        <option value="-1">Select a category</option>
+                        <option value="">Select a category</option>
                         {this.state.categoryList ? 
                         this.state.categoryList.map((category) => {
                           return <option key={category._id} value={category._id}>{category.name}</option>
@@ -109,10 +118,56 @@ class AddNewContent extends React.Component{
                       </select>
                   </div>
               </div>
+              <div className="col-md-6">
+                  <div className="form-group has-warning has-feedback">
+                      <label className="control-label" htmlFor="inputWarning3">Content Type</label><br/>
+                      <select className="form-control" required="required" onChange={(e) => {
+                          this.setState({
+                              contentType: e.target.value
+                          })
+                      }}>
+                        <option value="-1">Select a Type</option>
+                        <option value="Video">Video</option>
+                        <option value="Image">Image</option>
+                      </select>
+                  </div>
+              </div>
+              <div className="col-md-6">
+                  <div className="form-group has-success has-feedback">
+                      <label className="control-label" htmlFor="inputSuccess3">Tags</label>
+                      <input type="text" className="form-control" id="inputSuccess3" placeholder="Tag will be added after a comma" onKeyUp={(e)=> {
+                        if (e.keyCode === 188) {
+                            const tag = e.target.value.substring(0, e.target.value.indexOf(','));
+                            e.target.value = '' ;
+                            this.setState({
+                                tags: [
+                                    ...this.state.tags,
+                                    tag
+                                ]
+                            });
+                        }
+                      }}/>
+                      {/* <i className="fa fa-check form-control-feedback"></i> */}
+                  </div>
+              </div>
+              <div className="col-md-12 mb-2">
+                    {this.state.tags.map((tag, i) => {
+                        return <span onClick={() => {
+                            let newTag = [];
+                            newTag = this.state.tags.filter((filterTag, index) => {
+                                return filterTag !== tag
+                            })
+                            this.setState({
+                                tags: newTag
+                            })
+                        }} key={i} className="tag p-1 mr-2 my-2 btn btn-pri">{tag}</span>
+                    })}
+                    {this.state.tags.length !== 0 && 'Click To Remove Tag'}
+              </div>
               <div className="col-md-12">
                   <div className="form-group has-warning has-feedback">
                       <label className="control-label" htmlFor="inputError3">Description</label>
-                      <textarea type="text" className="form-control" id="inputError3" onChange={(e) => {
+                      <textarea rows={10} type="text" className="form-control" id="inputError3" placeholder="Video/Image Description..." onChange={(e) => {
                           this.setState({
                               description: e.target.value
                           })
@@ -141,7 +196,7 @@ class AddNewContent extends React.Component{
                   </div>
               </div>
           </div> */}
-            <input type="submit" className="btn btn-primary" defaultValue="Save & Publish"/>
+            <input type="submit" className="btn btn-pri" defaultValue="Save & Publish"/>
             <div className="text-center"> 
             {this.state.progress === 1 && <span className="alert alert-warning">Please Wait...</span>}
             {this.state.progress === 2 && <span className="alert alert-success">Successfully Published</span>}

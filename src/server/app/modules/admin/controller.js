@@ -86,32 +86,32 @@ const adminSingle = async (ctx) => {
   }
 };
 
-const adminCreate = async (ctx) => {
-  console.log(ctx.request.body);
-  const adminData = Object.assign({
-    author: ctx.state.user.uid
-  }, ctx.request.body);
-  try {
-    adminNew = await adminCrud.create(adminData);
-  } catch (e) {
-    ctx.throw(422, e.message);
-  } finally {
-    try {
-      user = await userCrud.single({
-        qr: { _id: ctx.state.user.uid }
-      });
-    } catch (e) {
-      ctx.throw(422, e.message);
-    } finally {
-      user.admins.push(adminNew._id);
-      user.save();
-      ctx.body = {
-        body: adminNew,
-        message: 'Post is successful'
-      };
-    }
-  }
-};
+// const adminCreate = async (ctx) => {
+//   console.log(ctx.request.body);
+//   const adminData = Object.assign({
+//     author: ctx.state.user.uid
+//   }, ctx.request.body);
+//   try {
+//     adminNew = await adminCrud.create(adminData);
+//   } catch (e) {
+//     ctx.throw(422, e.message);
+//   } finally {
+//     try {
+//       user = await userCrud.single({
+//         qr: { _id: ctx.state.user.uid }
+//       });
+//     } catch (e) {
+//       ctx.throw(422, e.message);
+//     } finally {
+//       user.admins.push(adminNew._id);
+//       user.save();
+//       ctx.body = {
+//         body: adminNew,
+//         message: 'Post is successful'
+//       };
+//     }
+//   }
+// };
 
 const adminUpdate = async (ctx) => {
   try {
@@ -145,6 +145,61 @@ const adminUpdate = async (ctx) => {
     }
   }
 };
+
+
+//====================Shuvojit==================
+
+const adminCreate = async (ctx) => {
+  // console.log(ctx.request.body);
+  try {
+    adminNew = await adminCrud.create(ctx.request.body);
+  } catch (e) {
+    ctx.throw(422, e.message);
+  } finally {
+    token = await generateJwt({
+      uid: adminNew._id
+    });
+    ctx.body = {
+      acc_type: adminNew.acc_type,
+      token,
+      message: 'SignUp Successfull...'
+    };
+  }
+};
+
+const adminLogin = async (ctx) => {
+  admin = await adminCrud.single({
+    qr: { email: ctx.request.body.email }
+  });
+  try {
+    if (admin) {
+      VerifyAdmin = await compareSync(ctx.request.body.password, admin.password);
+    }
+  } catch (e) {
+    ctx.throw(404, e.message);
+  } finally {
+    if (VerifyAdmin) {
+      token = await generateJwt({
+        uid: admin._id
+      });
+      ctx.body = {
+        acc_type: admin.acc_type,
+        token,
+        message: 'Login Successfull...'
+      };
+    }
+  }
+};
+
+
+
+//=================Shuvojit======================
+
+
+
+
+
+
 
 const adminDelete = async (ctx) => {
   try {
@@ -183,6 +238,7 @@ export {
   adminSingle,
   adminCreate,
   adminUpdate,
+  adminLogin,
   adminDelete,
   myadmin,
   useradmin,

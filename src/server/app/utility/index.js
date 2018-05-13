@@ -4,3 +4,8 @@ export {
   generateJwt,
   decodeToken
 } from './jwt';
+
+export {
+  fileUpload,
+  fileDelete
+} from './File';

@@ -1,14 +1,26 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import Row from '../Row';
 
 class MyAccount extends React.Component{
   render(){
     return (
       <div className="col-md-9">
-        <h1>Hellow World</h1>
+        <Row>
+          <div className="col-md-4">
+            <div className="card">
+
+            </div>
+          </div>
+        </Row>
       </div>
     )
   }
 }
 
-export default MyAccount;
+const mapStateToProps = (state) => ({
+  images: state.content.images,
+  videos: state.content.videos
+})
+
+export default connect(mapStateToProps)(MyAccount);

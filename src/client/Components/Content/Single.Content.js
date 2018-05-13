@@ -1,53 +1,101 @@
 import React from 'react';
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 import Social from './Single.Social';
+import Container from '../Container';
+import Row from '../Row';
 
-const SingleContent = ({ single }) => (
-<section>
-  <div className="title">
-    <h3>{single.title ? single.title : 'Untitled'}</h3>
-    <ul>
-      <li><h4>By:</h4></li>
-      <li><Link to="#">{single.author ? single.author.username : 'Admin'}</Link></li>
-      <li>
-        <Link to="#">
-          <img src="/images/sub.png" title="subscribe" />subscribe
-        </Link>
-      </li>
-    </ul>
-  </div>
-  <div className="video-inner">
-    <Link to="#">
-      {single.parmalink ?
-        <img src={single.parmalink} title={single.title} />
-      :
-        <img src="/images/b11.png" title="videoname" />
-      }
-      <span>10:00</span>
-    </Link>
-  </div>
-  <Social/>
-  <div className="clear"> </div>
-  <div className="video-details">
-    <ul>
-      <li><p>Uploaded on <Link to="#">June 21, 2013</Link> by <Link to="#">Lorem</Link></p></li>
-      <li><span>{single.description ? single.description : 'No Description'}</span></li>
-    </ul>
-    <ul className="other-links">
-      <li><Link to="#">youtube.com/videos-tube</Link></li>
-      <li><Link to="#">facebook.com/videos-tube</Link></li>
-      <li><Link to="#">Twitter.com/videos-tube</Link></li>
-    </ul>
-  </div>
-  <div className="clear"> </div>
-  <div className="tags">
-    <ul>
-      <li><h3>Tags:</h3></li>
-      <li><Link to="#">Games</Link> ,</li>
-      <li><Link to="#">HD-Videos</Link></li>
-    </ul>
-  </div> 
-</section>
+import {
+  FacebookShareButton,
+  GooglePlusShareButton,
+  TwitterShareButton,
+  FacebookIcon,
+  GooglePlusIcon,
+  TwitterIcon
+} from 'react-share'
+import { Player } from 'video-react';
+import FacebookShareCount from 'react-share/lib/FacebookShareCount';
+import conf from '../../config';
+import Download from '@axetroy/react-download';
+
+
+
+const SingleContent = ({ single, ...props }) => (
+  <div className="col-md-8">
+    <Row className=" bg-white"> 
+      <div className="col-md-12 title">
+        <h3 className="py-2">{single.title}</h3>
+      </div>
+      
+      <div className="col-md-12 video-inner" disabled>
+        {single && single.contentType.toLowerCase() === 'video' ?         
+        <Player
+          fluid
+          playsInline={false}
+          src={single && single.file.permalink ? single.file.permalink : 'No Video Available'}
+          startTime={0}
+        />
+        :       
+        <img src={single && single.file ? single.file.permalink : '/images/default.svg'} className="img-fluid w-100" alt="video" />
+        } 
+      </div> 
+      <div className="col-md-12 has-border-bottom  py-3">
+        <Row>  
+          <div className="col-md-8 view">
+            <ul>
+              <li><i className="fa fa-eye"></i> {single.views} Views</li>
+              <li><i className="fa fa-share-alt"></i> 
+                <FacebookShareCount 
+                  url={`${conf.server}/${props.shareLink}`}
+                /> Shares</li>
+            </ul>
+          </div> 
+          <div className="col-md-4" >
+            <FacebookShareButton
+              url={`${conf.server}/${props.shareLink}`}
+              quote={single.title}
+              className="float-right ml-1">
+              <FacebookIcon
+                size={32}
+                round/>
+            </FacebookShareButton>
+            <GooglePlusShareButton
+              url={`${conf.server}/${props.shareLink}`}
+              quote={single.title}
+              className="float-right ml-1">
+              <GooglePlusIcon
+                size={32}
+                round />
+            </GooglePlusShareButton>
+            <TwitterShareButton
+              url={`${conf.server}/${props.shareLink}`}
+              quote={single.title}
+              className="float-right ml-1">
+              <TwitterIcon
+                size={32}
+                round />
+            </TwitterShareButton>
+          </div>
+        </Row>
+      </div>
+      <div className="col-md-12 video-details py-3">
+        <p>{single.description}</p>
+      </div>
+    </Row>
+    <Row>
+      <div className="tags col-md-12 my-3 py-3">
+        <ul>
+          <li id="noback"><strong>Tags: </strong></li>
+          {single.tags.map((tag, key) => <li key={key}>{tag}</li> )}
+        </ul>
+      </div>
+    </Row> 
+    <Download file={single.file.permalink} content="Video Sharing">
+      <button className="btn btn-2x btn-pri" onClick={() => {
+
+      }}>
+      Download Now</button>
+    </Download>
+</div>
 )
 
 export default SingleContent

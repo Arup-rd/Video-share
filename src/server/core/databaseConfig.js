@@ -5,13 +5,13 @@ import config from 'config';
 export default function connectDatabase() {
   let dbUri;
 
-  // if (config.get('db.options.userName')) {
-  //   dbUri = `mongodb://${config.get('db.options.userName')}:${config.get('db.options.passWord')}@${config.get('db.host')}:${config.get('db.options.port')}/${config.get('db.dbName')}`;
-  // } else {
-  //   dbUri = `mongodb://${config.get('db.host')}:${config.get('db.options.port')}/${config.get('db.dbName')}`;
-  // }
+  if (config.get('db.options.userName')) {
+    dbUri = `mongodb://${config.get('db.options.userName')}:${config.get('db.options.passWord')}@${config.get('db.host')}:${config.get('db.options.port')}/${config.get('db.dbName')}`;
+  } else {
+    dbUri = `mongodb://${config.get('db.host')}:${config.get('db.options.port')}/${config.get('db.dbName')}`;
+  }
 
-  dbUri = 'mongodb://root:12345@ds263089.mlab.com:63089/parole';
+  // dbUri = 'mongodb://root:12345@ds263089.mlab.com:63089/parole';
 
   return new Promise((resolve, reject) => {
     mongoose.Promise = global.Promise;

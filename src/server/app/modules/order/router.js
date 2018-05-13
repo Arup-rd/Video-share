@@ -4,19 +4,19 @@ import {
   OrderCreate,
   OrderUpdate,
   OrderDelete,
-  OrderLogin,
-  myAccount
+  OrderAll
 } from './controller';
 
-export const baseUrl = '/api/Order';
+export const baseUrl = '/api/order';
 
 export const routes = [
+
   {
     method: 'GET',
-    route: '/me',
+    route: '/order/all',
     handlers: [
       isAuthenticated,
-      myAccount
+      OrderAll
     ]
   },
   {
@@ -47,13 +47,6 @@ export const routes = [
     route: '/create',
     handlers: [
       OrderCreate
-    ]
-  },
-  {
-    method: 'POST',
-    route: '/login',
-    handlers: [
-      OrderLogin
     ]
   }
 ];

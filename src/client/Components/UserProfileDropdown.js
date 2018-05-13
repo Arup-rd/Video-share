@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 // import { LogoutUser, setUser } from '../../Actions/auth';
 import Axios from 'axios';
 import conf from '../config';
-import { LogoutUser } from '../Actions/auth';
+import { LogoutUser, startLogin } from '../Actions/auth';
 
 
 class UserProfileDropdown extends React.Component{
@@ -18,13 +18,13 @@ class UserProfileDropdown extends React.Component{
         'authorization': localStorage.getItem('auth')
       }
     }).then((res) => {
-      // this.props.userData(res.data)
+      this.props.startLogin(res.data)
       this.setState({
         data: res.data
       })
     }).catch((e) => {
       localStorage.clear();
-      // this.props.LogoutUser();
+      this.props.LogoutUser();
       console.log(e)
     })
   }
@@ -34,20 +34,20 @@ class UserProfileDropdown extends React.Component{
     const { token, LogoutUser, userData, ...props} = this.props;
     const data = this.state.data;
     return (
-      <div className="float-right">
+      <div className="text-right">
         {data ?      
           <div className="dropdown">
             <Link className="text-white" to="#" data-toggle="dropdown">
               Hi, {data.user.firstname} {data.user.lastname} 
               <span ><i className="fa fa-caret-down px-2"></i></span>
             </Link>
-            <ul className="dropdown-menu  dropdown-menu-right p-0 mt-10" style={{top: 20}}>
+            <ul className="dropdown-menu  dropdown-menu-right p-2 mt-2" style={{top: 20}}>
               <li className="nav-item">
                 <Link to="/myaccount" className="nav-link text-info"><i className="fa fa-user"></i> My Account</Link>
               </li>
-              <li className="nav-item">
+              {/* <li className="nav-item">
                 <Link to="/myaccount/settings" className="nav-link text-info"><i className="fa fa-key"></i> Account Setting</Link>
-              </li>
+              </li> */}
               <li className="nav-item">
                 <Link onClick={() => {
                     localStorage.clear();
@@ -68,7 +68,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   LogoutUser: () => dispatch(LogoutUser()),
-  userData: (data) => dispatch(setUser(data))
+  startLogin: (data) => dispatch(startLogin(data))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserProfileDropdown);

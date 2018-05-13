@@ -21,7 +21,7 @@ const Header = () => (
           <p>Awesome Slogan Here</p>
         </Link>
         <NavBar/>
-        <button className="btn btn-pri my-2 my-sm-0">Want Personalised Content?</button>
+        <Link to="/custom-order"><button className="btn btn-pri my-2 my-sm-0">Want Personalised Content?</button></Link>
         
       </Container>
     </nav>

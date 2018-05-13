@@ -28,7 +28,7 @@ const myAccount = async (ctx) => {
   try {
     user = await userCrud.single({
       qr: { _id: ctx.state.user.uid },
-      populate: 'contents'
+      select: ' -password'
     });
   } catch (e) {
     ctx.throw(422, e.message);
