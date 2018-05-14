@@ -1,5 +1,5 @@
 const conf = {
-  server: 'http://localhost:3000'
+  server: 'http://vshare.codends.net'
 }
 
 export default conf;

@@ -10,7 +10,7 @@
     "start": "cross-env NODE_ENV=production node dist/server/core",
     "doc": "apidoc -i src/ -o doc/",
     "test": "jest --forceExit",
-    "build-client": "webpack -w"
+    "build-client": "webpack"
   },
   "repository": {
     "type": "git",
