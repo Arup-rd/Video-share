@@ -1,8 +1,10 @@
 import React from 'react';
-import '../../Styles/dashboard.scss';
 import Axios from 'axios';
-import storage from '../../Firebase/firebase';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import '../../Styles/dashboard.scss';
 import conf from '../../config';
+import { AddImage, AddVideo } from '../../Actions/content';
 
 class AddNewContent extends React.Component{
   state = {
@@ -15,9 +17,21 @@ class AddNewContent extends React.Component{
     tags: [],
     thumbnail: '',
     uploadStatus: null,
-    progress: false
+    progress: false,
+    cat: false // Create Category
   }
   componentDidMount() {
+    Axios.get(`${conf.server}/api/category`).then((res) => {
+      this.setState({
+        categoryList: res.data
+      })
+    }).catch((e) => {
+      console.log(e)
+    })
+  }
+
+
+  componentDidUpdate() {
     Axios.get(`${conf.server}/api/category`).then((res) => {
       this.setState({
         categoryList: res.data
@@ -41,7 +55,6 @@ class AddNewContent extends React.Component{
             'authorization': localStorage.getItem('auth')
         }
     }).then((res) => {
-        console.log(res.data);
         this.setState({
             uploadStatus: 'Successfull',
             file: res.data.files._id       
@@ -72,7 +85,7 @@ class AddNewContent extends React.Component{
             'authorization': localStorage.getItem('auth')
         }
     }).then((res) => {
-        console.log(res.data)
+        this.props.AddVideo(res.data);
         this.props.history.push('/myaccount');
         this.setState({
             progress: 2
@@ -81,6 +94,25 @@ class AddNewContent extends React.Component{
         console.log(e)
         this.setState({
             progress: undefined
+        })
+    })
+  }
+
+  createCategory = (e) => {
+    e.preventDefault();
+    this.setState({
+        cat: true    
+    })
+  }
+
+  SaveCategory = () => {
+    Axios.post(`${conf.server}/api/category`, {name: this.state.category},  {
+        headers: {
+            'authorization': localStorage.getItem('auth')
+        }
+    }).then((res) => {
+        this.setState({
+            cat: false
         })
     })
   }
@@ -94,7 +126,7 @@ class AddNewContent extends React.Component{
               <div className="col-md-6">
                   <div className="form-group has-success has-feedback">
                       <label className="control-label" htmlFor="inputSuccess3">Title</label>
-                      <input type="text" className="form-control" id="inputSuccess3" placeholder="Video/Image Title" required="required" onChange={(e)=> {
+                      <input type="text" className="form-control" id="inputSuccess3" placeholder="Video/Image Title"  onChange={(e)=> {
                           this.setState({
                               title: e.target.value
                           });
@@ -103,19 +135,32 @@ class AddNewContent extends React.Component{
               </div>
               <div className="col-md-6">
                   <div className="form-group has-warning has-feedback">
-                      <label className="control-label" htmlFor="inputWarning3">Category</label><br/>
-                      <select className="form-control" required="required" onChange={(e) => {
-                          this.setState({
-                              category: e.target.value
-                          })
-                      }}>
-                        <option value="">Select a category</option>
-                        {this.state.categoryList ? 
-                        this.state.categoryList.map((category) => {
-                          return <option key={category._id} value={category._id}>{category.name}</option>
+                      <label className="control-label" htmlFor="inputWarning3">Category 
+                      {this.state.cat ?
+                      <span id="cat" onClick={this.SaveCategory} to="#" className="float-right">Save</span>
+                      : 
+                      <span id="cat" onClick={this.createCategory} to="#" className="float-right">Create Category</span>
+                      }
+                      </label><br/>
+                      {this.state.cat ? <input onChange={(e) => {
+                        this.setState({
+                            category: e.target.value
                         })
-                        : <option value="-1">Loading...</option>}
-                      </select>
+                      }} type="text" className="form-control" placeholder="Type and Save..."/> 
+                        :
+                        <select className="form-control" required="required" onChange={(e) => {
+                            this.setState({
+                                category: e.target.value
+                            })
+                        }}>
+                            <option value="">Select a category</option>
+                            {this.state.categoryList ? 
+                            this.state.categoryList.map((category) => {
+                            return <option key={category._id} value={category._id}>{category.name}</option>
+                            })
+                            : <option value="-1">Loading...</option>}
+                        </select>
+                      }
                   </div>
               </div>
               <div className="col-md-6">
@@ -208,4 +253,9 @@ class AddNewContent extends React.Component{
   }
 }
 
-export default AddNewContent;
+const mapDispatchToProps = (dispatch) => ({
+    AddImage: (data) => dispatch(AddImage(data)),
+    AddVideo: (data) => dispatch(AddVideo(data))
+})
+
+export default connect(undefined, mapDispatchToProps)(AddNewContent)

@@ -9,8 +9,10 @@ import FeatureNav from '../Components/Homepage/FeatureNav';
 import { connect } from 'react-redux';
 import Axios from 'axios';
 import conf from '../config';
-import { setCatContent, setCategory, setContent } from '../Actions/content';
+import { setCatContent, setCategory, setContent, MyImage } from '../Actions/content';
 import Loader from '../Components/Loader'
+import SearchContent from '../Selectors/content';
+import { addFilter } from '../Actions/filter';
 
 class Images extends React.Component{
   state = {
@@ -19,26 +21,30 @@ class Images extends React.Component{
     images: false
   }
 
-  componentDidMount() {
+  componentDidMount(){
     Axios.get(`${conf.server}/api/content/image`).then((res) => {
-      this.props.setCategory(res.data);
       this.setState({
-        images: res.data,
+        images: true
       })
-      this.props.location.hash && this.filterComponent(this.props.location.hash );
+      this.props.MyImage(res.data);
+      
+      // this.props.location.hash && this.filterComponent(this.props.location.hash.substring(1));
+            
     }).catch((e) => {
+      console.log(e);
       this.setState({
-        images: false,
+        images: undefined
       })
-      console.log('error found ', e);
     })
   }
 
   filterComponent = async (filter) => {
+    console.log(filter)
     Axios.get(`${conf.server}/api/content/image/${filter}`).then(async (res) => {
-      this.props.setCatContent(res.data);
+      console.log(res.data)
+      this.props.MyImage(res.data);
       this.setState({
-        images: res.data,
+        images: true,
       })
     }).catch((e) => {
       this.setState({
@@ -48,18 +54,22 @@ class Images extends React.Component{
     })
   }
 
+  Search = (text) => {
+    this.props.addFilter(text);
+  }
+
   render(){
     return (
     <div className="content"> 
       <section id="images" className="images p-0">
         <Container>
-          <Search/>
+          <Search Search={this.Search}/>
           <Row>
             <div className="col-md-2 p-0">
               <FeatureNav filter={this.filterComponent}/>
             </div>
             <div className="col-md-10">
-              {this.state.images ? <Contents data={this.state.images}/>: <Loader/>}
+              {this.props.images ? <Contents data={this.props.images}/>: <Loader/>}
             </div>
           </Row>
         </Container>
@@ -71,6 +81,7 @@ class Images extends React.Component{
 }
 
 const mapStateToProps = (state) => ({
+  images: SearchContent(state.content.images, state.filter),
   allContent: state.content.all,
   category: state.content.category, // Getting all Category
   cat_content: state.content.cat_content, // Filtered Category Content
@@ -78,8 +89,10 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
+  addFilter: (text) => dispatch(addFilter(text)),
   setContent: (body) => dispatch(setContent(body)),
   setCategory: (data) => dispatch(setCategory(data)),
+  MyImage: (data) => (dispatch(MyImage(data))),
   setCatContent: (data) => dispatch(setCatContent(data))
 })
 

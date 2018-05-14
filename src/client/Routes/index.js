@@ -24,6 +24,7 @@ import MyImages from '../Components/Dashboard/MyImages';
 import MyVideos from '../Components/Dashboard/MyVideos';
 import MyMemes from '../Components/Dashboard/MyMemes';
 import CustomOrder from '../Views/CustomOrder';
+import MyCategory from '../Components/Dashboard/MyCategory';
 
 export const history = createHistory()
 
@@ -44,13 +45,14 @@ const AppRouter = () => (
         <Route path='/custom-order' component={CustomOrder}/>
         
         <PublicRoute path='/login' component={Login} />
-        <PublicRoute path='/register' component={Register} />
+        {/* <PublicRoute path='/register' component={Register} /> */}
 
         <PrivateRoute path="/myaccount" exact={true} component={MyAccount}/>
         <PrivateRoute path="/myaccount/post" component={AddNewContent}/>
         <PrivateRoute path="/myaccount/images" exact={true} component={MyImages}/>
         <PrivateRoute path="/myaccount/videos" exact={true} component={MyVideos}/>
         <PrivateRoute path="/myaccount/memes" exact={true} component={MyMemes}/>
+        <PrivateRoute path="/myaccount/category" exact={true} component={MyCategory}/>
 
         <PrivateRoute path="/myaccount/orders/images" exact={true} component={MyImages}/>
         <PrivateRoute path="/myaccount/orders/videos" exact={true} component={MyVideos}/>

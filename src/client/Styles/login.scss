@@ -28,6 +28,9 @@
     border-radius: 1px;
 }
 
+label{
+    display: inline !important;
+}
 
 #regLoginForm input[type=text], #regLoginForm input[type=password], #regLoginForm input[type=email], #regLoginForm textarea, #regLoginForm select {
     width: 100%;

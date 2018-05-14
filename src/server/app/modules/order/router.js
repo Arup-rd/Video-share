@@ -4,7 +4,8 @@ import {
   OrderCreate,
   OrderUpdate,
   OrderDelete,
-  OrderAll
+  OrderAll,
+  ContactUs
 } from './controller';
 
 export const baseUrl = '/api/order';
@@ -17,6 +18,13 @@ export const routes = [
     handlers: [
       isAuthenticated,
       OrderAll
+    ]
+  },
+  {
+    method: 'POST',
+    route: '/contact',
+    handlers: [
+      ContactUs
     ]
   },
   {

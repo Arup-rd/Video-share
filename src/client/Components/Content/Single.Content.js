@@ -30,9 +30,8 @@ const SingleContent = ({ single, ...props }) => (
         {single && single.contentType.toLowerCase() === 'video' ?         
         <Player
           fluid
-          playsInline={false}
+          playsInline={true}
           src={single && single.file.permalink ? single.file.permalink : 'No Video Available'}
-          startTime={0}
         />
         :       
         <img src={single && single.file ? single.file.permalink : '/images/default.svg'} className="img-fluid w-100" alt="video" />

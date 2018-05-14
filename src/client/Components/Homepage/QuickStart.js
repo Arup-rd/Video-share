@@ -16,21 +16,21 @@ const QuickStart = () => (
           <span className="p-3 d-inline-block rounded-circle bg-pri">
             <i className="fa fa-3x fa-paper-plane  text-white"></i>
           </span>
-          <h3>Counter on your website</h3>
+          <h3 className="pt-3">Counter on your website</h3>
           <p>At the time of adding bootstrap CSS in your website header, you also need to add font awesome CSS in the header. </p>
         </div>
         <div className="col-md-4">
           <span className="p-3 d-inline-block rounded-circle bg-pri">
             <i className="fa fa-3x fa-paper-plane  text-white"></i>
           </span>
-          <h3>Counter on your website</h3>
+          <h3 className="pt-3">Counter on your website</h3>
           <p>At the time of adding bootstrap CSS in your website header, you also need to add font awesome CSS in the header. </p>
         </div>
         <div className="col-md-4">
           <span className="p-3 d-inline-block rounded-circle bg-pri">
             <i className="fa fa-3x fa-paper-plane  text-white"></i>
           </span>
-          <h3>Counter on your website</h3>
+          <h3 className="pt-3">Counter on your website</h3>
           <p>At the time of adding bootstrap CSS in your website header, you also need to add font awesome CSS in the header. </p>
         </div>
       </Row>

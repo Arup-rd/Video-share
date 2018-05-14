@@ -5,7 +5,7 @@ import Row from '../Row';
 import Loader from '../Loader';
 import conf from '../../config';
 import Card from '../Card';
-import { MyVideo } from '../../Actions/content';
+import { MyVideo, DeleteVideo } from '../../Actions/content';
 
 class MyVideos extends React.Component{
   state = {
@@ -25,6 +25,18 @@ class MyVideos extends React.Component{
     })
   }
 
+  DeleteVideo = (id) => {
+    Axios.delete(`${conf.server}/api/content/${id}`, {
+      headers: {
+        'authorization': localStorage.getItem('auth')
+      }
+    }).then((res) => {
+      this.props.DeleteVideo(id);
+    }).catch((e) => {
+      console.log(e)
+    })
+  }
+
   
   render(){
     return (
@@ -32,7 +44,15 @@ class MyVideos extends React.Component{
       {this.props.videos &&
         <Row>
           {this.props.videos.slice(0, 12).map((video) => {
-            return <Card key={video._id} data={video} permitted={true}/>
+            return (
+              <Card 
+                key={video._id} 
+                data={video} 
+                permitted={true}
+                deleteItem={this.DeleteVideo}
+              />
+            )
+
           })}
         </Row>
       }
@@ -45,7 +65,8 @@ const mapStateToProps = (state) => ({
   videos: state.content.videos
 })
 const mapDispatchToProps = (dispatch) => ({
-  MyVideo: (data) => (dispatch(MyVideo(data)))
+  MyVideo: (data) => (dispatch(MyVideo(data))),
+  DeleteVideo: (id) => dispatch(DeleteVideo(id))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(MyVideos);

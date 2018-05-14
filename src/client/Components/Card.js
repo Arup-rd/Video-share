@@ -9,11 +9,12 @@ const Card = ({ data, ...props }) => (
       <div className="card bg-light text-center mb-4">
         <div className="card-body p-0">
           <Player
-            fluid
+            fluid={true}
             playsInline={false}
             src={data && data.file ? data.file.permalink : 'No Video Available'}
             startTime={5}
             player={false}
+            aspectRatio={'16:9'}
           />
           {/* <video width="100%" height="180px" controls>
             <source src="/uploads/John-Legend-Love-Me-Now.MP4" type="video/mp4"/>
@@ -27,7 +28,7 @@ const Card = ({ data, ...props }) => (
         </Link>
       </div>
       :       
-      <div className="card bg-light text-center mb-4">
+      <div className="card bg-light text-center mb-4 image-card">
         <div className="card-body p-0">
           <img src={data && data.file ? data.file.permalink : '/images/default.svg'} className="img-fluid" alt="video"/>
         </div> 

@@ -21,8 +21,7 @@ class AuthNav extends React.Component{
               <UserProfileDropdown/>
               :
               <div className="float-right text-white">
-                <Link to="/login" className="mr-2 py-1 text-white">Login</Link>
-                <Link to="/register" className="py-1 text-white">Register</Link>
+                <Link to="/login" className="py-1 text-white">Login</Link>
               </div>
             }
           </div>

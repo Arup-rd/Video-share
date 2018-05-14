@@ -2,16 +2,14 @@ import React from 'react'
 import CountUp from 'react-countup';
 
 class CounterCard extends React.Component{
-  state = this.props
-
   render(){
-    const { icon, to, title } = this.state;
+    const { icon, to, title } = this.props;
     return (
-    <div className="col-md-3 text-center">
-      <div className="counter card p-2">
+    <div className={ `${this.props.className ? this.props.className : 'col-md-3'} text-center text-white`}>
+      <div className="counter p-2">
         <i className={`fa fa-${icon} fa-2x p-3`}></i>
-        <h2 className="timer count-title count-number" >
-          <CountUp start={10} end={to}/>
+        <h2 className="" >
+          {to  != false ? <CountUp start={0} end={to} duration={5} /> : 'Upload'}
         </h2>
         <p className="count-text ">{title}</p>
       </div>

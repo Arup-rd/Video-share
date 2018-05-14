@@ -18,7 +18,6 @@ class FeatureContent extends React.Component{
 
   componentDidMount() {
     Axios.get(`${conf.server}/api/category`).then((res) => {
-      // console.log(res.data)
       this.props.setCategory(res.data);
       this.setState({
         category: true,
@@ -34,11 +33,10 @@ class FeatureContent extends React.Component{
     })
   }
 
+
   filterComponent = async (filter) => {
-    // console.log(this.state.filter)
     Axios.get(`${conf.server}/api/content/category/${filter}`).then(async (res) => {
       this.props.setCatContent(res.data);
-      // console.log('after',res.data)
       this.setState({
         content: true,
       })
@@ -65,7 +63,7 @@ class FeatureContent extends React.Component{
           <div className="col-md-10">
             <Row>
               {this.props.cat_content ? this.props.cat_content.slice(0, 9).map((content, key) => {
-                return <Card key={content._id} data={content}/>
+                return <Card key={key} data={content}/>
               }) : this.props.cat_content ? '' :<Loader className="col-md-12"/>}
             </Row>
           </div>

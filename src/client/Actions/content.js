@@ -1,3 +1,13 @@
+export const AddVideo = (data) => ({
+    type: 'ADD_VD',
+    data
+});
+
+export const AddImage = (data) => ({
+    type: 'ADD_IMG',
+    data
+});
+
 export const setContent = (data) => ({
     type: 'SET_CONTENT',
     data
@@ -45,7 +55,11 @@ export const getSingle = (id) => ({
     type: 'GET_SINGLE',
     id
 })
-export const deleteContent = (id) => ({
-    type: 'DELETE_CONTENT',
+export const DeleteImage = (id) => ({
+    type: 'DELETE_IMAGE',
+    id
+})
+export const DeleteVideo = (id) => ({
+    type: 'DELETE_VIDEO',
     id
 })

@@ -1,6 +1,10 @@
 const path = require('path');
 
 module.exports = {
+  nodemailer: {
+    user: 'test@gmail.com',
+    pass: 'test1234'
+  },
   paths: {
     app: {
       client: path.resolve(__dirname, '../src/client'),

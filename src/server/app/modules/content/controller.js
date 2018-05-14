@@ -1,6 +1,6 @@
 import { contentCrud } from './content.model';
 import { userCrud } from '../user/user.model';
-
+import { filesCrud } from '../files/files.model';
 
 let content;
 let contentNew;
@@ -188,6 +188,10 @@ const contentCreate = async (ctx) => {
   }, ctx.request.body);
   try {
     contentNew = await contentCrud.create(contentData);
+    const file = await filesCrud.single({
+      qr: contentNew.file
+    });
+    contentNew.file = file;
   } catch (e) {
     ctx.throw(422, e.message);
   } finally {

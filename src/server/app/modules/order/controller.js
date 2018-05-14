@@ -1,13 +1,19 @@
 import nodemailer from 'nodemailer';
+import config from 'config';
 import { OrderCrud } from './order.model';
 
 let Order;
 let OrderNew;
 let order;
-let transporter;
 let mailOptions;
 // const { 0: secret } = config.get('secret');
-
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: config.get('nodemailer.user'),
+    pass: config.get('nodemailer.pass')
+  }
+});
 
 const OrderSingle = async (ctx) => {
   try {
@@ -23,6 +29,31 @@ const OrderSingle = async (ctx) => {
   }
 };
 
+const ContactUs = async (ctx) => {
+  mailOptions = {
+    from: ctx.request.body.email,
+    to: 'applicationreact@gmail.com', // Admin Email Will Be Here
+    subject: `${ctx.request.body.name} want a custom video`,
+    text: `
+      Name: ${ctx.request.body.firstname} ${ctx.request.body.firstname} Send a message\n
+      Email: ${ctx.request.body.email}\n
+      Phone: ${ctx.request.body.phone}\n
+      ${ctx.request.body.description}
+    `
+  };
+
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log(`Email sent: ${info.response}`);
+    }
+  });
+  ctx.body = {
+    status: 200,
+    message: 'Successfully Sent'
+  };
+};
 
 const OrderCreate = async (ctx) => {
   try {
@@ -30,14 +61,6 @@ const OrderCreate = async (ctx) => {
   } catch (e) {
     ctx.throw(422, e.message);
   } finally {
-    transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: 'applicationreact@gmail.com',
-        pass: 'go@way#54321'
-      }
-    });
-
     mailOptions = {
       from: ctx.request.body.email,
       to: 'applicationreact@gmail.com', // Admin Email Will Be Here
@@ -59,72 +82,6 @@ const OrderCreate = async (ctx) => {
   }
 };
 
-
-// const OrderUpdate = async (ctx) => {
-//   try {
-//     user = await userCrud.single({
-//       qr: { _id: ctx.state.user.uid }
-//     });
-//     isMatched = user.order.indexOf(ctx.params.id);
-//   } catch (e) {
-//     ctx.throw(422, e.message);
-//   } finally {
-//     if (isMatched !== -1) {
-//       try {
-//         order = await OrderCrud.put({
-//           params: {
-//             qr: { _id: ctx.params.id }
-//           },
-//           body: ctx.request.body
-//         });
-//       } catch (e) {
-//         ctx.throw(422, e.message);
-//       } finally {
-//         ctx.body = {
-//           body: order,
-//           message: 'Post Updated..'
-//         };
-//       }
-//     } else {
-//       ctx.body = {
-//         message: 'Sorry you don\'t have right to edit this'
-//       };
-//     }
-//   }
-// };
-
-// const OrderDelete = async (ctx) => {
-//   try {
-//     user = await userCrud.single({
-//       qr: { _id: ctx.state.user.uid }
-//     });
-//     isMatched = user.order.indexOf(ctx.params.id);
-//   } catch (e) {
-//     ctx.throw(422, e.message);
-//   } finally {
-//     if (isMatched !== -1) {
-//       try {
-//         order = await OrderCrud.delete({
-//           params: {
-//             qr: { _id: ctx.params.id }
-//           }
-//         });
-//       } catch (e) {
-//         ctx.throw(422, e.message);
-//       } finally {
-//         ctx.body = {
-//           body: order,
-//           message: 'Deleted'
-//         };
-//       }
-//     } else {
-//       ctx.body = {
-//         message: 'Sorry you don\'t have right to delete this'
-//       };
-//     }
-//   }
-// };
-
 const OrderAll = async (ctx) => {
   try {
     order = await OrderCrud.get();
@@ -140,5 +97,6 @@ export {
   OrderCreate,
   // OrderUpdate,
   // OrderDelete,
-  OrderAll
+  OrderAll,
+  ContactUs
 };

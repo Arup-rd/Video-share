@@ -5,7 +5,7 @@ import Row from '../Row';
 import Card from '../Card';
 import conf from '../../config';
 import Loader from '../Loader';
-import { MyImage, deleteContent } from '../../Actions/content';
+import { MyImage, deleteContent, DeleteImage } from '../../Actions/content';
 
 class MyImages extends React.Component{
   state = {
@@ -25,14 +25,17 @@ class MyImages extends React.Component{
     })
   }
 
-  deleteItem = (id) => {
+  componentWillUpdate(){
+    console.log(this.props.images)
+  }
+
+  DeleteImage = (id) => {
     Axios.delete(`${conf.server}/api/content/${id}`, {
       headers: {
         'authorization': localStorage.getItem('auth')
       }
     }).then((res) => {
-      this.props.deleteItem(id);
-      console.log(res.data)
+      this.props.DeleteImage(id);
     }).catch((e) => {
       console.log(e)
     })
@@ -49,7 +52,7 @@ class MyImages extends React.Component{
                 key={image._id} 
                 data={image} 
                 permitted={true}
-                deleteItem={this.deleteItem}
+                deleteItem={this.DeleteImage}
               />
             )
           })}
@@ -66,7 +69,7 @@ const mapStateToProps = (state) => ({
 })
 const mapDispatchToProps = (dispatch) => ({
   MyImage: (data) => (dispatch(MyImage(data))),
-  deleteItem: (id) => dispatch(deleteContent(id))
+  DeleteImage: (id) => dispatch(DeleteImage(id))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(MyImages);

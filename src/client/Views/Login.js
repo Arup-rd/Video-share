@@ -61,9 +61,7 @@ class Login extends React.Component{
                   <div className="p-2"><Link to="#">Forget</Link></div>
                 </div>
                 <input type="submit" className="btn btn-info" defaultValue="Login"/>
-                <div className="d-flex createAccountBtn">
-                  <label><Link to="/register">Create an Account</Link></label>
-                </div>
+                
                 <br/>
                 {this.state.err &&
                 <div className="alert alert-warning">

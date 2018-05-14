@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Kaushan+Script|Titillium+Web:400,700');
 @import url('./login.scss');
 @import url('./contact.scss');
+@import url('./dashboard.scss');
 @import "~video-react/styles/scss/video-react"; // or import scss
 
 // $primary: #722BC2;
@@ -118,6 +119,30 @@ header .dropdown-menu-right{
   z-index: 99999;
 }
 
+#slider .owl-item .item{
+  background: #000;
+  -webkit-transition: all 0.3s ease 0s;
+  -ms-transition: all 0.3s ease 0s;
+  -moz-transition: all 0.3s ease 0s;
+  -o-transition: all 0.3s ease 0s;
+  transition: all 0.3s ease 0s;
+}
+#slider .owl-item .item img{
+  -webkit-transition: all 0.3s ease 0s;
+  -ms-transition: all 0.3s ease 0s;
+  -moz-transition: all 0.3s ease 0s;
+  -o-transition: all 0.3s ease 0s;
+  transition: all 0.3s ease 0s;
+}
+#slider:hover .owl-item .item img{
+  opacity: 0.5;
+  -webkit-transition: all 0.3s ease 0s;
+  -ms-transition: all 0.3s ease 0s;
+  -moz-transition: all 0.3s ease 0s;
+  -o-transition: all 0.3s ease 0s;
+  transition: all 0.3s ease 0s;
+}
+
 #slider .owl-dots{
   position: absolute;
   bottom: 100px;
@@ -162,7 +187,7 @@ header .dropdown-menu-right{
   width: 100%;
   position: absolute;
   background: #33333366;
-  padding: 55px;
+  padding: 45px;
   opacity: 0;
   top: 0px;
   -webkit-transition: all 0.3s ease-out 0s;
@@ -183,6 +208,14 @@ header .dropdown-menu-right{
 
 .card .card-footer i{
   color:#fff;
+}
+
+.image-card{
+  height: 200px;;
+}
+
+.image-card .card-footer{
+  padding: 65px;
 }
 
 // Single
@@ -264,4 +297,13 @@ header .dropdown-menu-right{
   -moz-transition: all 0.3s ease-in 0s;
   -o-transition: all 0.3s ease-in 0s;
   transition: all 0.3s ease-in 0s;
+}
+
+#cat{
+  cursor: pointer;
+  color: $primary;
+}
+
+ul{
+  list-style: none;
 }
