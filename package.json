@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/smitray/coolkit.git"
+    "url": ""
   },
   "keywords": [
     "Boilerplate",
@@ -23,12 +23,12 @@
     "Vue",
     "SSR"
   ],
-  "author": "Smit Ray <humancoder@outlook.com>",
+  "author": "Arup",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/smitray/coolkit/issues"
+    "url": ""
   },
-  "homepage": "https://github.com/smitray/coolkit#readme",
+  "homepage": "",
   "dependencies": {
     "@axetroy/react-download": "^1.1.1",
     "axios": "^0.18.0",
